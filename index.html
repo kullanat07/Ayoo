@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>???</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* ================================== */
+/* 1. Base Styles (Default - Mobile First) */
+/* ================================== */
+/* -- Container  -- */
+.container {
+    width: 100%;
+    padding-left: 1rem; 
+    padding-right: 1rem;
+    margin: 0 auto;
+}
+
+/* ================================== */
+/* 2. Responsive Breakpoints */
+/* ================================== */
+
+/* ---------------------------------- */
+/* 2. Breakpoint 'sm' (640px) ขึ้นไป */
+/* ---------------------------------- */
+@media (min-width: 640px) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        /* max-width: 600px; */
+    }
+}
+
+/* ---------------------------------- */
+/* 3. Breakpoint 'md' (768px) ขึ้นไป */
+/* ---------------------------------- */
+@media (min-width: 768px) {
+    .container {
+        max-width: 740px;
+        padding-left: 0; 
+        padding-right: 0;
+    }
+}
+
+/* ---------------------------------- */
+/* 4. Breakpoint 'lg' (1024px) ขึ้นไป */
+/* ---------------------------------- */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 980px;
+        padding-left: 0; 
+        padding-right: 0;
+    }
+}
+
+/* ---------------------------------- */
+/* 5. Breakpoint 'xl' (1280px) ขึ้นไป */
+/* ---------------------------------- */
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1140px;
+        padding-left: 0; 
+        padding-right: 0;
+    }
+}
+
+/* ---------------------------------- */
+/* 6. Breakpoint '2xl' (1536px) ขึ้นไป */
+/* ---------------------------------- */
+@media (min-width: 1536px) {
+    .container {
+        /* ใช้ขนาดที่คุณต้องการ */
+        max-width: 1240px;
+        padding-left: 0; 
+        padding-right: 0;
+    }
+}
+
+        :root {
+            --primary-blue: #87CEEB;
+            --dark-blue: #4682B4;
+            --gold: #D4AF37;
+        }
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .handwriting {
+            font-family: 'Caveat', cursive;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background: var(--primary-blue);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 15s infinite ease-in;
+            opacity: 0.7;
+            z-index: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); left: var(--l); }
+            100% { transform: translateY(-120vh) rotate(20deg); left: var(--l); }
+        }
+        .gift-box {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: var(--gold);
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: 0 auto;
+        }
+        .gift-box:hover { transform: scale(1.1); }
+        .gift-lid {
+            position: absolute;
+            top: -20px;
+            left: -5px;
+            width: 160px;
+            height: 40px;
+            background: #b8860b;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .open .gift-lid { 
+            transform: translateY(-80px) translateX(20px) rotate(25deg); 
+            opacity: 0.8;
+        }
+        .message-card {
+            display: none;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Cake Style */
+        .cake { position: relative; width: 100px; height: 60px; background: #fff; border-radius: 10px 10px 0 0; margin: 20px auto; border-bottom: 4px solid #f0f0f0; }
+        .candle { position: absolute; top: -30px; left: 45px; width: 10px; height: 30px; background: #ffd700; }
+        .flame { position: absolute; top: -15px; left: 2px; width: 6px; height: 12px; background: orange; border-radius: 50%; animation: flicker 0.5s infinite; }
+        @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .blown-out .flame { display: none; }
+
+        /* Lock Overlay */
+        #lock-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(224, 242, 254, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        .unlock-input {
+            letter-spacing: 0.5em;
+            text-indent: 0.5em;
+        }
+        #main-content {
+            display: none;
+        }
+    </style>
+</head>
+<div class="container">
+<body class="text-slate-800">
+
+    <!-- Passcode Lock Screen -->
+    <div id="lock-screen">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border-2 border-sky-200 text-center max-w-sm mx-4">
+            <div class="text-6xl mb-4">🔐</div>
+            <h2 class="text-2xl font-bold text-sky-800 mb-2">ป้อนรหัสสส</h2>
+            <p class="text-sm text-slate-500 mb-6 italic">คำใบ้: ตัวเลข 6 หลัก (ขึ้นต้นด้วย วัน/เดือน/ปีเกิด)</p>
+            <input type="password" id="passcode" maxlength="6" 
+                   class="unlock-input w-full text-center text-3xl font-bold py-3 border-b-4 border-sky-400 focus:outline-none bg-sky-50 rounded-lg text-sky-700 mb-4"
+                   placeholder="******">
+            <button onclick="checkPasscode()" 
+                    class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
+                Unlock 💖
+            </button>
+            <p id="error-msg" class="text-red-500 mt-3 text-sm hidden">รหัสไม่ถูกต้องนะอ้วนน ลองใหม่ๆ 🥺</p>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden initially) -->
+    <div id="main-content">
+        <!-- Floating Balloons Background -->
+        <div id="balloon-container"></div>
+
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative z-10">
+            <div class="animate-bounce text-6xl md:text-8xl mb-4">🎉</div>
+            <h1 class="text-5xl md:text-7xl font-bold text-sky-700 mb-4">
+                Happy Birthday <br>คับอ้วนน ! 🎂
+            </h1>
+            <p class="text-xl md:text-2xl text-sky-600 mb-12 handwriting">"You're not getting older, <br>you're are getting better"</p>
+            
+            <a href="#surprise" class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-lg hover:shadow-sky-200">
+                เลื่อนลงเพื่อดูเซอร์ไพรส์ ✨
+            </a>
+        </section>
+
+        <!-- Gift Section -->
+        <section id="surprise" class="min-h-screen py-20 bg-white/30 backdrop-blur-sm flex flex-col items-center justify-center text-center px-6">
+            <h2 class="text-3xl font-semibold text-sky-800 mb-12">มีของขวัญมาให้อ้วนด้วย เปิดเลยย! 🎁</h2>
+            
+            <div id="gift" class="gift-box rounded-lg shadow-xl mb-10" onclick="openGift()">
+                <div class="gift-lid rounded-sm"></div>
+                <div id="gift-text" class="absolute inset-0 flex items-center justify-center text-white font-bold">CLICK ME</div>
+            </div>
+
+            <div id="message" class="message-card max-w-2xl bg-white p-8 rounded-3xl shadow-2xl border-2 border-sky-100">
+                <h3 class="text-2xl text-sky-700 font-bold mb-4">ถึงอ้วนน...</h3>
+                <p class="text-lg leading-relaxed text-slate-600 mb-6">
+                    ขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ ในชีวิตนะ วันเกิดปีนี้ขอให้เธอมีความสุขมากๆ 
+                ยิ้มเยอะๆ สุขภาพแข็งแรง และอยู่เป็นความสดใสให้กันแบบนี้ไปนานๆ เลยนะ <br>
+                รักเธอที่สุดในโลกเลยยยยยย! ❤️
+                </p>
+                <div class="flex justify-center gap-4">
+                    <span class="text-4xl">🐱</span>
+                    <span class="text-4xl">💖</span>
+                    <span class="text-4xl">🐶</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Cake Section -->
+        <section class="py-20 flex flex-col items-center bg-sky-50">
+            <h2 class="text-3xl font-bold text-sky-800 mb-6">อ้วนอธิษฐานแล้วเป่าเทียนน !</h2>
+            <div id="cake-container" class="cursor-pointer" onclick="blowCandle()">
+                <div id="cake" class="cake shadow-md">
+                    <div id="candle" class="candle">
+                        <div class="flame"></div>
+                    </div>
+                </div>
+            </div>
+            <p id="cake-msg" class="mt-4 text-sky-600 font-medium">จิ้มที่เทียนเพื่อเป่า</p>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section class="py-20 px-4 max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-sky-800 mb-12">Our Happy Moments 📸</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Mock Photos with Placeholders -->
+                <div class="bg-white p-3 rounded-xl shadow-md rotate-2 hover:rotate-0 transition-all">
+                    <div class="aspect-square bg-sky-100 rounded-lg flex items-center justify-center text-sky-300 overflow-hidden">
+                        <img src="img/3bb45a05-eee8-4bf2-8199-67ec3ea44a5b.jpg">
+                    </div>
+                    <p class="mt-3 text-center handwriting text-xl">รูปคู่วว</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl shadow-md -rotate-1 hover:rotate-0 transition-all">
+                    <div class="aspect-square bg-sky-100 rounded-lg flex items-center justify-center text-sky-300 overflow-hidden">
+                        <img src="img/e268aa95-8d39-408a-b13e-a9bf7fd72ade.jpg" alt="smile" class="w-full h-full object-cover">
+                    </div>
+                    <p class="mt-3 text-center handwriting text-xl">รอยยิ้มที่ชอบที่สุดด</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl shadow-md rotate-3 hover:rotate-0 transition-all">
+                    <div class="aspect-square bg-sky-100 rounded-lg flex items-center justify-center text-sky-300 overflow-hidden">
+                        <img src="img/513ed1b6-8996-4fa9-a3ab-cab37b0d1970.jpg" alt="candid" class="w-full h-full object-cover">
+                    </div>
+                    <p class="mt-3 text-center handwriting text-xl">แอบถ่ายย</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-10 text-center text-sky-500 text-sm">
+            Made with ❤️ for You | 2024
+        </footer>
+    </div>
+
+    <script>
+        const CORRECT_CODE = "030150";
+
+        function checkPasscode() {
+            const input = document.getElementById('passcode').value;
+            const errorMsg = document.getElementById('error-msg');
+            const lockScreen = document.getElementById('lock-screen');
+            const mainContent = document.getElementById('main-content');
+
+            if (input === CORRECT_CODE) {
+                lockScreen.style.opacity = '0';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    createBalloons();
+                    createConfetti(); // Welcome confetti
+                }, 500);
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('passcode').value = '';
+                // Shake effect
+                document.getElementById('passcode').classList.add('animate-bounce');
+                setTimeout(() => document.getElementById('passcode').classList.remove('animate-bounce'), 500);
+            }
+        }
+
+        // Allow Enter key to unlock
+        document.getElementById('passcode').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPasscode();
+        });
+
+        // Create Background Balloons
+        function createBalloons() {
+            const container = document.getElementById('balloon-container');
+            const colors = ['#87CEEB', '#B0E0E6', '#ADD8E6', '#F0F8FF', '#D4AF37'];
+            for (let i = 0; i < 20; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.setProperty('--l', Math.random() * 100 + 'vw');
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDelay = Math.random() * 10 + 's';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                container.appendChild(balloon);
+            }
+        }
+
+        // Interaction Functions
+        function openGift() {
+            const gift = document.getElementById('gift');
+            const message = document.getElementById('message');
+            const giftText = document.getElementById('gift-text');
+            
+            if (gift.classList.contains('open')) return; // ป้องกันการกดซ้ำ
+
+            gift.classList.add('open');
+            giftText.innerText = "YAY! 💖";
+            
+            setTimeout(() => {
+                message.style.display = 'block';
+                // ไม่ลบกล่องออกเพื่อให้ยังคงเห็นกล่องที่เปิดแล้ว
+                createConfetti();
+            }, 500);
+        }
+
+        function blowCandle() {
+            const candle = document.getElementById('candle');
+            const msg = document.getElementById('cake-msg');
+            candle.classList.add('blown-out');
+            msg.innerText = "ขอให้คำอธิษฐานเป็นจริงนะ! ✨";
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for(let i=0; i<50; i++) {
+                const conf = document.createElement('div');
+                conf.innerText = ['✨', '💖', '⭐', '🎈'][Math.floor(Math.random() * 4)];
+                conf.style.position = 'fixed';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-20px';
+                conf.style.zIndex = '1100';
+                conf.style.fontSize = Math.random() * 20 + 10 + 'px';
+                conf.animate([
+                    { transform: 'translateY(0) rotate(0)' },
+                    { transform: `translateY(110vh) rotate(${Math.random() * 360}deg)` }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'linear'
+                });
+                document.body.appendChild(conf);
+                setTimeout(() => conf.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</div>
+</html>
